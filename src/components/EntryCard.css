@@ -1,0 +1,31 @@
+.entry-card {
+    border: 1px solid #dcdcdc;
+    border-radius: 12px;
+    padding: 20px;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+  }
+  
+  .entry-card .arabic {
+    font-size: 22px;
+    font-weight: bold;
+    direction: rtl;
+    text-align: right;
+    font-family: 'Amiri', serif;
+    color: #0a3a28;
+  }
+  
+  .entry-card .urdu {
+    direction: rtl;
+    text-align: right;
+    font-family: 'Noto Nastaliq Urdu', serif;
+    font-size: 18px;
+    color: #444;
+  }
+  
+  .entry-card .english {
+    font-style: italic;
+    color: #666;
+  }
+  
