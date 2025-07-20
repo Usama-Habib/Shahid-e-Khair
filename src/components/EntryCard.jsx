@@ -8,7 +8,7 @@ const EntryCard = ({ entry }) => {
     <div className="entry-card" style={styles.card}>
       <div style={styles.header}>
         <span style={styles.type}>{entry.type.toUpperCase()}</span>
-        {showReference && <span style={styles.reference}>{entry.reference}</span>}
+        {showReference && <span style={styles.reference}>📌 {entry.reference}</span>}
       </div>
 
       {entry.source && (
@@ -65,14 +65,17 @@ const styles = {
     fontSize: '13px',
   },
   reference: {
-    fontStyle: 'italic',
-    fontSize: '13px',
-    color: '#333',
+    fontSize: '12px',
+    color: '#555',
+    background: '#f0f0f0',
+    padding: '2px 6px',
+    borderRadius: '4px',
   },
   source: {
     fontSize: '14px',
+    color: '#999',
     marginBottom: '8px',
-    color: '#555',
+    fontStyle: 'italic',
   },
   arabic: {
     fontSize: '24px',
@@ -95,7 +98,7 @@ const styles = {
   },
   english: {
     fontSize: '16px',
-    color: '#444',
+    color: '#4a5568',
     marginTop: '10px',
     lineHeight: '1.6',
   },
