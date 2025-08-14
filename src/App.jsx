@@ -8,17 +8,13 @@ import Hadith from './pages/Hadith';
 import Duas from './pages/Duas';
 import QuranicVerse from './pages/Quranic Verse';
 import Navbar from './components/NavBar';
+import ImageCreator from './pages/CreateImage';
 
 const App = () => {
-  // const [theme, setTheme] = useState('light');
-  // useEffect(() => {
-  //   const root = window.document.documentElement;
-  //   root.setAttribute('data-theme', theme);
-  // }, [theme]);
   return (
     <Router>
       <ThemeProvider>
-      <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors">
+      <div>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -26,6 +22,7 @@ const App = () => {
         <Route path="/hadith" element={<Hadith />} />
         <Route path="/duas" element={<Duas />} />
         <Route path="/quranic-verses" element={<QuranicVerse />} />
+        <Route path="/create-image" element={<ImageCreator />} />
       </Routes>  
       </div>
     </ThemeProvider>

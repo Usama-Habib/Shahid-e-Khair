@@ -30,28 +30,6 @@
     font-family: 'Inter', sans-serif;
   }
 
-  :root {
-    --header-bg: #ffffff;
-    --text-color: #000000;
-    --accent-color: #007bff;
-  }
   
-  [data-theme='dark'] {
-    --header-bg: #1a1a1a;
-    --text-color: #f0f0f0;
-    --accent-color: #66b2ff;
-  }
-  
-  [data-theme='system'] {
-    --header-bg: #f4f4f4;
-    --text-color: #000;
-    --accent-color: #007bff;
-  }
-  
-  body {
-    background-color: var(--header-bg);
-    color: var(--text-color);
-    transition: background-color 0.3s, color 0.3s;
-  }
   
   

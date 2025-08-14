@@ -6,14 +6,15 @@ html{
 body {
   margin: 0;
   font-family: 'Amiri', serif;
-  background: #f5f7fa;
-  color: #222;
+  background-color: var(--header-bg);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .main-title {
   text-align: center;
   margin-top: 20px;
-  color: #0c3c26;
+  color: var(--text-color); /* Use theme variable */
   font-family: 'Amiri', serif;
 }
 .page-container {
@@ -26,7 +27,7 @@ body {
 }
 
 
-:root {
+/* :root {
   --header-bg: #ffffff;
   --text-color: #000000;
   --accent-color: #007bff;
@@ -42,12 +43,39 @@ body {
   --header-bg: #f4f4f4;
   --text-color: #000;
   --accent-color: #007bff;
+} */
+
+
+/* Light theme (default) */
+:root {
+  --header-bg: #ffffff;
+  --body-bg: #f7f8fa;
+  --text-color: #222222;
+  --text-muted: #555c6a;
+  --accent-color: #00cc99;
+  --border-color: #e5e7eb;
+}
+
+/* Dark theme */
+html.dark {
+  --header-bg: #23272f;
+  --body-bg: #181a20;
+  --text-color: #e6e6e6;
+  --text-muted: #b0b3b8;
+  --accent-color: #00cc99;
+  --border-color: #2c2f36;
 }
 
 body {
-  background-color: var(--header-bg);
+  background-color: var(--body-bg);
   color: var(--text-color);
   transition: background-color 0.3s, color 0.3s;
 }
 
-
+/* Example usage for muted text and borders */
+.muted {
+  color: var(--text-muted);
+}
+hr, .bordered {
+  border-color: var(--border-color);
+}

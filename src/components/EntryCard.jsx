@@ -1,14 +1,26 @@
-import React from 'react';
+import { FaShareAlt } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const EntryCard = ({ entry }) => {
+  const navigate = useNavigate();
   const tags = entry.tags?.split(',').map(tag => tag.trim()).filter(Boolean) || [];
   const showReference = entry.reference && entry.reference.toLowerCase() !== 'n/a';
+
+  const handleShare = () => {
+    // Pass entry data via state (recommended for objects)
+    navigate('/create-image', { state: { entry } });
+  };
 
   return (
     <div className="entry-card" style={styles.card}>
       <div style={styles.header}>
         <span style={styles.type}>{entry.type.toUpperCase()}</span>
         {showReference && <span style={styles.reference}>📌 {entry.reference}</span>}
+        <FaShareAlt
+          style={{ cursor: 'pointer', marginLeft: 0, color: '#00cc99' }}
+          title="Share as Image"
+          onClick={handleShare}
+        />
       </div>
 
       {entry.source && (

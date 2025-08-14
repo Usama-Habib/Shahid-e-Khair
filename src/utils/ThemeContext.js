@@ -8,26 +8,22 @@ export const ThemeProvider = ({ children }) => {
 
   useEffect(() => {
     const root = document.documentElement;
-    console.log(root)
-    console.log(theme)
 
     const applyTheme = (value) => {
+      root.classList.remove('light', 'dark');
       if (value === 'dark') {
         root.classList.add('dark');
-        root.classList.remove('light');
       } else {
         root.classList.add('light');
-        root.classList.remove('dark');
       }
     };
 
     const getSystemTheme = () =>
       window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 
+    
     if (theme === 'system') {
-        console.log("insdide system")
       const systemTheme = getSystemTheme();
-      console.log(systemTheme)
       applyTheme(systemTheme);
 
       const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
