@@ -3,6 +3,8 @@ import { FiSquare, FiSmartphone, FiMonitor } from 'react-icons/fi';
 import { useLocation } from 'react-router-dom';
 import html2canvas from 'html2canvas';
 import '../styles/CreateImage.css';
+import domtoimage from 'dom-to-image';
+
 
 const backgrounds = [
   { name: 'Pattern 1', url: '/assets/backgrounds/pattern1.jpg' },
@@ -27,36 +29,35 @@ const ImageCreator = () => {
   const [arabic, setArabic] = useState('');
   const [english, setEnglish] = useState('');
   const [urdu, setUrdu] = useState('');
+  const [reference, setReference] = useState('');
 
   const [showArabic, setShowArabic] = useState(true);
   const [showEnglish, setShowEnglish] = useState(true);
   const [showUrdu, setShowUrdu] = useState(true);
+  const [showReference, setShowReference] = useState(true);
 
   const [background, setBackground] = useState(backgrounds[0].url);
   // const [size, setSize] = useState(imageSizes[0]);
   const previewRef = useRef(null);
 
-  const isAnyFieldSelected = showArabic && arabic || showEnglish && english || showUrdu && urdu;
+  const isAnyFieldSelected = showArabic && arabic || showEnglish && english || showUrdu && urdu || showReference && reference;
 
   useEffect(() => {
     if (entry) {
       setArabic(entry.arabic_text || '');
       setEnglish(entry.english_translation || '');
       setUrdu(entry.urdu_translation || '');
+      setReference(entry.reference && entry.reference.toLowerCase() !== 'n/a' ? entry.reference : '');
     }
   }, [entry]);
 
   const handleDownload = async () => {
     if (!previewRef.current) return;
-    const canvas = await html2canvas(previewRef.current, {
-      useCORS: true,
-      backgroundColor: null,
-      width: OUTPUT_WIDTH,
-      height: OUTPUT_HEIGHT,
-    });
+
+    const dataUrl = await domtoimage.toPng(previewRef.current);
     const link = document.createElement('a');
     link.download = 'islamic-image.png';
-    link.href = canvas.toDataURL();
+    link.href = dataUrl;
     link.click();
   };
 
@@ -168,6 +169,25 @@ const ImageCreator = () => {
               rows={2}
             />
           </div>
+          <div className="field-row">
+            <label className="field-label">
+              Reference
+              <input
+                type="checkbox"
+                checked={showReference}
+                onChange={(e) => setShowReference(e.target.checked)}
+                className="toggle-checkbox"
+              />
+              <span className="toggle-slider"></span>
+            </label>
+            <textarea
+              value={reference}
+              onChange={(e) => setReference(e.target.value)}
+              placeholder="Enter reference (e.g., Quran 2:255)"
+              className="field-input"
+              rows={1}
+            />
+          </div>
           <button onClick={handleDownload} disabled={!isAnyFieldSelected}>
             Download Image
           </button>
@@ -185,22 +205,27 @@ const ImageCreator = () => {
           {/* Overlay for dimming */}
           <div className="image-creator-overlay" />
           {isAnyFieldSelected && (
-            <div className="image-creator-preview-content"
-            style={{
-              // backgroundImage: `url(${background})`,
-              // backgroundSize: 'cover',
-              // backgroundPosition: 'center',
-              // backgroundRepeat: 'no-repeat',
-              // backgroundBlendMode: 'overlay', // optional for effect
-            }}
-            >
-              {/* Islamic Header */}
-              <div className="image-header">
-                <span className="bismillah-text">بسم الله الرحمن الرحيم</span>
+            <div className="image-creator-preview-content">
+              {/* Islamic Header - now absolutely positioned */}
+              <div className="image-header sticky-header">
+                <span
+                  className="bismillah-text"
+                  style={{
+                    fontFamily: "'Amiri', 'Scheherazade New', serif",
+                    fontSize: '2.4rem',
+                    color: '#008060',
+                    letterSpacing: '2px',
+                    fontWeight: 'bold',
+                    textAlign: 'center',
+                    direction: 'rtl',
+                  }}
+                >
+                  ✦ بسم الله الرحمن الرحيم ✦
+                </span>
                 <div className="header-divider" />
               </div>
-              {/* Main Content */}
-              <div className="image-main-content">
+              {/* Main Content - centered */}
+              <div className="image-main-content centered-content">
                 {showArabic && arabic && (
                   <div className="preview-arabic">{arabic}</div>
                 )}
@@ -210,12 +235,40 @@ const ImageCreator = () => {
                 {showUrdu && urdu && (
                   <div className="preview-urdu">{urdu}</div>
                 )}
+                {showReference && reference && (
+                  <div className="preview-reference">{reference}</div>
+                )}
               </div>
-              {/* Islamic Footer */}
-              <div className="image-footer">
-                <div className="footer-divider" />
-                <span className="footer-brand">Shahid-e-Khair</span>
+              {/* Islamic Footer - now absolutely positioned */}
+              <div className="image-footer sticky-footer">
+              <div className="footer-divider" />
+              <span
+                className="footer-brand"
+                style={{
+                  fontFamily: "'Cairo', 'Segoe UI', sans-serif",
+                  fontSize: '1.08rem',
+                  fontWeight: 'bold',
+                  color: '#008060',
+                  letterSpacing: '1px',
+                }}
+              >
+                ☾ Shahid-e-Khair ☾
+              </span>
+              <div
+                className="footer-subtext"
+                style={{
+                  fontFamily: "'Cairo', 'Segoe UI', sans-serif",
+                  fontSize: '1rem',
+                  color: '#008060',
+                  opacity: 0.85,
+                  marginTop: '4px',
+                  letterSpacing: '0.5px',
+                  textAlign: 'center',
+                }}
+              >
+                Share the khair • صدقہ جاریہ
               </div>
+            </div>
             </div>
           )}
         </div>
